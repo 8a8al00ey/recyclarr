@@ -29,4 +29,5 @@ public class AppPaths : IAppPaths
     public string LogDirectory => _fs.Path.Combine(GetAppDataPath(), "logs");
     public string RepoDirectory => _fs.Path.Combine(GetAppDataPath(), "repo");
     public string CacheDirectory => _fs.Path.Combine(GetAppDataPath(), "cache");
+    public string ConfigsDirectory => _fs.Path.Combine(GetAppDataPath(), "configs");
 }

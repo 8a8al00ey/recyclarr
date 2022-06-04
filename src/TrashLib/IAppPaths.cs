@@ -12,4 +12,5 @@ public interface IAppPaths
     string DefaultConfigFilename { get; }
     bool IsAppDataPathValid { get; }
     string DefaultAppDataDirectoryName { get; }
+    string ConfigsDirectory { get; }
 }

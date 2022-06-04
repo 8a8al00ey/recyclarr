@@ -24,5 +24,6 @@ public class InitializeAppDataPath : IServiceInitializer
         _fs.Directory.CreateDirectory(_paths.RepoDirectory);
         _fs.Directory.CreateDirectory(_paths.CacheDirectory);
         _fs.Directory.CreateDirectory(_paths.LogDirectory);
+        _fs.Directory.CreateDirectory(_paths.ConfigsDirectory);
     }
 }
