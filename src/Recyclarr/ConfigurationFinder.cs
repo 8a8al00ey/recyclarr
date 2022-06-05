@@ -37,4 +37,16 @@ public class ConfigurationFinder : IConfigurationFinder
 
         return oldPath;
     }
+
+    private IEnumerable<string> AllYamlInConfigsDirectory()
+    {
+        return _fs.Directory.EnumerateFiles(_paths.ConfigsDirectory, "*.yml");
+    }
+
+    public IEnumerable<string> FindAllConfigFiles()
+    {
+        return AllYamlInConfigsDirectory()
+            .Append(FindConfigPath())
+            .Where(x => _fs.File.Exists(x));
+    }
 }

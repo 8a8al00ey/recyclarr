@@ -21,7 +21,7 @@ public abstract class ServiceCommand : ICommand, IServiceCommand
     [CommandOption("config", 'c', Description =
         "One or more YAML config files to use. All configs will be used and settings are additive. " +
         "If not specified, the script will look for `recyclarr.yml` in the same directory as the executable.")]
-    public ICollection<string> Config { get; [UsedImplicitly] set; } = new List<string>();
+    public ICollection<string>? Config { get; [UsedImplicitly] set; }
 
     [CommandOption("app-data", Description =
         "Explicitly specify the location of the recyclarr application data directory. " +

@@ -1,3 +1,4 @@
+using System.IO.Abstractions;
 using Common.Networking;
 using Flurl.Http;
 using Flurl.Http.Configuration;
@@ -12,7 +13,7 @@ using TrashLib.Repo;
 
 namespace Recyclarr.Command.Initialization.Init;
 
-internal class ServiceInitializer : IServiceInitializer
+public class ServiceInitializer : IServiceInitializer
 {
     private readonly ILogger _log;
     private readonly LoggingLevelSwitch _loggingLevelSwitch;
@@ -20,6 +21,7 @@ internal class ServiceInitializer : IServiceInitializer
     private readonly ISettingsProvider _settingsProvider;
     private readonly IRepoUpdater _repoUpdater;
     private readonly IConfigurationFinder _configFinder;
+    private readonly IFileSystem _fs;
 
     public ServiceInitializer(
         ILogger log,
@@ -27,7 +29,8 @@ internal class ServiceInitializer : IServiceInitializer
         ISettingsPersister settingsPersister,
         ISettingsProvider settingsProvider,
         IRepoUpdater repoUpdater,
-        IConfigurationFinder configFinder)
+        IConfigurationFinder configFinder,
+        IFileSystem fs)
     {
         _log = log;
         _loggingLevelSwitch = loggingLevelSwitch;
@@ -35,6 +38,7 @@ internal class ServiceInitializer : IServiceInitializer
         _settingsProvider = settingsProvider;
         _repoUpdater = repoUpdater;
         _configFinder = configFinder;
+        _fs = fs;
     }
 
     public void Initialize(ServiceCommand cmd)
@@ -48,9 +52,9 @@ internal class ServiceInitializer : IServiceInitializer
         SetupHttp();
         _repoUpdater.UpdateRepo();
 
-        if (!cmd.Config.Any())
+        if (cmd.Config is null || !cmd.Config.Any())
         {
-            cmd.Config = new[] {_configFinder.FindConfigPath()};
+            cmd.Config = _configFinder.FindAllConfigFiles().ToList();
         }
     }
 
