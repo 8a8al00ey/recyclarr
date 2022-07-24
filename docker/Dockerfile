@@ -18,6 +18,7 @@ FROM alpine AS final
 # Required by environment and/or dotnet
 ENV RECYCLARR_APP_DATA=/config \
     DOTNET_BUNDLE_EXTRACT_BASE_DIR=/tmp/.net \
+    PATH="${PATH}:/app/recyclarr" \
     # Environment variables used by the entrypoint script. These may be overridden from `docker run`
     # as needed.
     CRON_SCHEDULE="@daily" \
@@ -28,7 +29,7 @@ RUN set -e; \
     apk add --no-cache libstdc++ tzdata; \
     mkdir -p "$DOTNET_BUNDLE_EXTRACT_BASE_DIR" && chmod 777 "$DOTNET_BUNDLE_EXTRACT_BASE_DIR"
 
-COPY --chmod=555 --from=build /build/recyclarr /usr/local/bin
+COPY --from=build /build/publish /app/recyclarr/
 COPY --chmod=555 ./scripts/prod/*.sh /
 
 USER 1000:1000
