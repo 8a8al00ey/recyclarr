@@ -13,6 +13,7 @@ services:
       context: .
       args:
         - TARGETPLATFORM=linux/amd64
+        - BUILD_FROM_BRANCH=fix-rootless-docker
     init: true
     networks: [recyclarr]
     volumes:
