@@ -21,11 +21,14 @@ fi
 if [ "$#" -gt 0 ]; then
     recyclarr "$@"
 else
-    echo "Creating crontab file..."
-    echo "$CRON_SCHEDULE /cron.sh" | crontab -
+    echo "Begin running on interval..."
 
-    crontab -l
+    while true
+    do
+        . /cron.sh || true # Don't exit if the tasks fail
 
-    echo "Starting cron daemon..."
-    exec crond -f
+        echo
+        echo "Pausing for interval [$RECYCLARR_INTERVAL]..."
+        sleep $RECYCLARR_INTERVAL
+    done
 fi

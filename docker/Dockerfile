@@ -17,10 +17,8 @@ FROM alpine AS final
 
 # Required by environment and/or dotnet
 ENV RECYCLARR_APP_DATA=/config \
+    RECYCLARR_INTERVAL=1d \
     DOTNET_BUNDLE_EXTRACT_BASE_DIR=/tmp/.net \
-    # Environment variables used by the entrypoint script. These may be overridden from `docker run`
-    # as needed.
-    CRON_SCHEDULE="@daily" \
     # The GLOBALIZATION variable is so that we do not need libicu installed (saves us ~40MB).
     DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true
 
